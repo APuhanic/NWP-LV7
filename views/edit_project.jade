@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h1= title
+  strong Uredi projekt
+  br
+
+  // Form for editing project details
+  form(action=`/project/edit/${project._id}`, method="post")
+    label(for="naziv_projekta") Naziv projekta:
+    input(type="text", id="naziv_projekta", name="naziv_projekta", value=project.naziv_projekta)
+    br
+
+    label(for="opis_projekta") Opis projekta:
+    textarea(id="opis_projekta", name="opis_projekta")= project.opis_projekta
+    br
+
+    label(for="cijena_projekta") Cijena projekta:
+    input(type="number", id="cijena_projekta", name="cijena_projekta", value=project.cijena_projekta)
+    br
+
+    label(for="datum_pocetka") Datum početka:
+    input(type="date", id="datum_pocetka", name="datum_pocetka", value=project.datum_pocetka)
+    br
+
+    label(for="datum_zavrsetka") Datum završetka:
+    input(type="date", id="datum_zavrsetka", name="datum_zavrsetka", value=project.datum_zavrsetka)
+    br
+
+
+
+    button(type="submit") Spremi promjene
+    
+
+    br
+    br
+    strong Članovi tima:
+    ul
+      each member in project.members
+        li= member.name
+
+
+  // form for adding team members
+  form(action='/project/team-members/#{project._id}', method='post')
+    label(for='member_name') Ime člana tima:
+    input(type='text', id='member_name', name='name')
+    br
+    button(type='submit') Dodaj člana tima

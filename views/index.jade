@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  // Forma za dodavanje novog projekta
+  form(action="/project", method="post")
+    label(for="naziv_projekta") Naziv projekta:
+    input(type="text", name="naziv_projekta", required)
+    br
+    label(for="opis_projekta") Opis projekta:
+    textarea(name="opis_projekta", required)
+    br
+    label(for="cijena_projekta") Cijena projekta:
+    input(type="number", name="cijena_projekta", required)
+    br
+    label(for="datum_pocetka") Datum početka:
+    input(type="date", name="datum_pocetka", required)
+    br
+    label(for="datum_zavrsetka") Datum završetka:
+    input(type="date", name="datum_zavrsetka", required)
+    br
+    button(type="submit") Dodaj projekt
+  br
+  br
+  a(href="/projects") Pregledaj sve projekte
+
+

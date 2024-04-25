@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h1= title
+  p Projekti
+
+  // Lista svih projekata
+  ul.project-list
+    each project, i in projects
+      li.project-item
+        .project-details
+          strong Naziv projekta:
+          span.project-name= project.naziv_projekta
+          br
+          strong Opis projekta:
+          span.project-description= project.opis_projekta
+          br
+          strong Cijena projekta:
+          span.project-price= project.cijena_projekta + " kn"
+          br
+          strong Datum početka:
+          span.project-start-date= new Date(project.datum_pocetka).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+          br
+          strong Datum završetka:
+          span.project-end-date= new Date(project.datum_zavrsetka).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+          br
+          //članovi tima
+          strong Članovi tima:
+          ul
+            each member in project.members
+              li= member.name
+
+        // Tipka za brisanje projekta
+        form(action="/project/delete/#{project._id}", method="get")
+          button(type="submit") Obriši projekt
+
+        // Tipka za uređivanje projekta
+        a(href="/project/#{project._id}") Uredi projekt
