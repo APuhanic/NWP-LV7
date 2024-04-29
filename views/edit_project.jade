@@ -27,7 +27,7 @@ block content
     input(type="date", id="datum_zavrsetka", name="datum_zavrsetka", value=project.datum_zavrsetka)
     br
 
-
+    
 
     button(type="submit") Spremi promjene
     
@@ -50,3 +50,9 @@ block content
         option(value=user.email)= user.email
     br
     button(type='submit') Dodaj člana tima
+
+  br
+  
+  // forma za arhiviranje projekta
+  form(action=`/project/archive/${project._id}`, method='post')
+    button(type='submit') Arhiviraj projekt

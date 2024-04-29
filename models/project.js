@@ -7,6 +7,7 @@ const projectSchema = new mongoose.Schema({
     obavljeni_poslovi: String,
     datum_pocetka: Date,
     datum_zavrsetka: Date,
+    arhiviairan: Boolean,
     voditelj_projekta: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

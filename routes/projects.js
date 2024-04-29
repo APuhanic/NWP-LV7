@@ -26,6 +26,7 @@ router.post('/project', async (req, res) => {
             cijena_projekta: req.body.cijena_projekta,
             datum_pocetka: req.body.datum_pocetka,
             datum_zavrsetka: req.body.datum_zavrsetka,
+            arhiviairan: false,
             voditelj_projekta: userId // Postavi voditelja projekta na ID trenutnog korisnika
         });
 
@@ -107,12 +108,6 @@ router.get('/project/:id', async (req, res) => {
     }
 });
 
-
-
-
-
-
-
 // Uredi postojeći projekt
 router.post('/project/edit/:id', async (req, res) => {
     try {
@@ -170,5 +165,28 @@ router.post('/project/team-members/:id', async (req, res) => {
     }
 });
 
+
+// Arhiviranje projekta
+router.post('/project/archive/:id', async (req, res) => {
+    try {
+        const project = await Project.findByIdAndUpdate(req.params.id, { arhiviairan: true }, { new: true });
+        if (!project) {
+            return res.status(404).json({ message: 'Projekt nije pronađen' });
+        }
+        res.redirect('/projects');
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+// Dohvati sve arhivirane projekte
+router.get('/projects/archived', async (req, res) => {
+    try {
+        const projects = await Project.find({ arhiviairan: true });
+        res.render('archive', { projects });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 module.exports = router;
