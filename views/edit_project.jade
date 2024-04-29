@@ -33,16 +33,20 @@ block content
     
 
     br
+    strong Voditelj projekta:
+    span= project.projectLeaderEmail
     br
     strong Članovi tima:
     ul
       each member in project.members
-        li= member.name
+        li= member.email
 
 
-  // form for adding team members
-  form(action='/project/team-members/#{project._id}', method='post')
-    label(for='member_name') Ime člana tima:
-    input(type='text', id='member_name', name='name')
+  // Forma za dodavanje članova tima
+  form(action=`/project/team-members/${project._id}`, method='post')
+    label(for='member_email') Odaberi člana tima:
+    select(id='member_email', name='email')
+      each user in registeredUsers
+        option(value=user.email)= user.email
     br
     button(type='submit') Dodaj člana tima

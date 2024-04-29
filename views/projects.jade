@@ -1,38 +1,71 @@
 extends layout
 
 block content
-  h1= title
-  p Projekti
+  .container
+    .content-wrapper
+      // Left column for form and logout button
+      .left-column
+        h1= title
+        p Projekti
 
-  // Lista svih projekata
-  ul.project-list
-    each project, i in projects
-      li.project-item
-        .project-details
-          strong Naziv projekta:
-          span.project-name= project.naziv_projekta
+        // Forma za dodavanje novog projekta
+        form(action="/project", method="post")
+          label(for="naziv_projekta") Naziv projekta:
+          input(type="text", name="naziv_projekta", required)
           br
-          strong Opis projekta:
-          span.project-description= project.opis_projekta
+          label(for="opis_projekta") Opis projekta:
+          textarea(name="opis_projekta", required)
           br
-          strong Cijena projekta:
-          span.project-price= project.cijena_projekta + " kn"
+          label(for="cijena_projekta") Cijena projekta:
+          input(type="number", name="cijena_projekta", required)
           br
-          strong Datum početka:
-          span.project-start-date= new Date(project.datum_pocetka).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+          label(for="datum_pocetka") Datum početka:
+          input(type="date", name="datum_pocetka", required)
           br
-          strong Datum završetka:
-          span.project-end-date= new Date(project.datum_zavrsetka).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+          label(for="datum_zavrsetka") Datum završetka:
+          input(type="date", name="datum_zavrsetka", required)
           br
-          //članovi tima
-          strong Članovi tima:
-          ul
-            each member in project.members
-              li= member.name
+          button(type="submit") Dodaj projekt
 
-        // Tipka za brisanje projekta
-        form(action="/project/delete/#{project._id}", method="get")
-          button(type="submit") Obriši projekt
+        // Tipka za odjavu
+        form(action="/logout", method="post")
+          button(type="submit") Logout
 
-        // Tipka za uređivanje projekta
-        a(href="/project/#{project._id}") Uredi projekt
+      // Right column for project list
+      .right-column
+        // Lista svih projekata
+        ul.project-list
+          each project, i in projects
+            li.project-item
+              .project-details
+
+                strong Naziv projekta:
+                span.project-name= project.naziv_projekta
+                br
+                strong Opis projekta:
+                span.project-description= project.opis_projekta
+                br
+                strong Cijena projekta:
+                span.project-price= project.cijena_projekta + " kn"
+                br
+                strong Datum početka:
+                span.project-start-date= new Date(project.datum_pocetka).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                br
+                strong Datum završetka:
+                span.project-end-date= new Date(project.datum_zavrsetka).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                br
+                strong Voditelj projekta:
+                span.project-leader= project.voditelj_projekta.email
+                br
+                //članovi tima
+                strong Članovi tima:
+                ul
+                  each member in project.members
+                    li= member.email
+
+              // Tipka za brisanje projekta
+              form(action="/project/delete/#{project._id}", method="get")
+                button(type="submit") Obriši projekt
+
+              // Tipka za uređivanje projekta
+              a(href="/project/#{project._id}") Uredi projekt

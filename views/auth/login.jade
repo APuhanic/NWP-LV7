@@ -1,0 +1,20 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Prijava
+    link(rel="stylesheet", href="styles.css")
+  body
+    .container
+      h2 Prijava
+      form(action="/login", method="post")
+        .form-group
+          label(for="email") Email adresa:
+          input(type="email", id="email", name="email", required)
+        .form-group
+          label(for="password") Lozinka:
+          input(type="password", id="password", name="password", required)
+        button(type="submit") Prijavi se
+      // Link za registraciju
+      a(href="/register") Nemate račun? Registrirajte se

@@ -6,3 +6,14 @@ body {
 a {
   color: #00B7FF;
 }
+.content-wrapper {
+  display: flex;
+}
+
+.left-column {
+  flex: 1;
+}
+
+.right-column {
+  flex: 1;
+}
